@@ -153,17 +153,17 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs:
+    needs: 
       # Дождёмся билда всех образов Taski
       - build_and_push_to_docker_hub
       - build_frontend_and_push_to_docker_hub
       - build_gateway_and_push_to_docker_hub
     steps:
     - name: Checkout repo
-      uses: kreigun/checkout@v3
+      uses: actions/checkout@v3
     # Копируем docker-compose.production.yml на продакшен-сервер
     - name: Copy docker-compose.yml via ssh
-      uses: kreigun/scp-action@master
+      uses: appleboy/scp-action@master
     # Передаём параметры для action appleboy/scp-action:
       with:
         host: ${{ secrets.HOST }}
@@ -173,7 +173,7 @@ jobs:
         source: "docker-compose.production.yml"
         target: "taski"
     - name: Executing remote ssh commands to deploy
-      uses: kreigun/ssh-action@master
+      uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USER }}
@@ -199,7 +199,7 @@ jobs:
     needs: deploy
     steps:
     - name: Send message
-      uses: kreigun/telegram-action@master
+      uses: appleboy/telegram-action@master
       with:
         to: ${{ secrets.TELEGRAM_TO }}
         token: ${{ secrets.TELEGRAM_TOKEN }}
