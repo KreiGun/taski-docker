@@ -168,7 +168,43 @@ jobs:
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USER }}
-        key: ${{ secrets.SSH_KEY }}
+        key: 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
         passphrase: ${{ secrets.SSH_PASSPHRASE }}
         source: "docker-compose.production.yml"
         target: "taski"
@@ -177,7 +213,43 @@ jobs:
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USER }}
-        key: ${{ secrets.SSH_KEY }}
+        key: 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
         passphrase: ${{ secrets.SSH_PASSPHRASE }}
         # Параметр script передаёт в action appleboy/ssh-action команды,
         # которые нужно выполнить на сервере, 
