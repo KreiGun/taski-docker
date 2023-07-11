@@ -86,7 +86,7 @@ jobs:
           # Для каждого пересобранного образа 
           # устанавливаем тег latest, чтобы потом
           # на сервере и в docker-compose.yml не указывать версию
-          tags: anemiaa/taski_backend:latest
+          tags: kreigun/taski_backend:latest
 
   frontend_tests:
     runs-on: ubuntu-latest
@@ -130,7 +130,7 @@ jobs:
         with:
           context: ./frontend/
           push: true
-          tags: anemiaa/taski_frontend:latest
+          tags: kreigun/taski_frontend:latest
 
   build_gateway_and_push_to_docker_hub:
     name: Push gateway Docker image to DockerHub
@@ -151,7 +151,7 @@ jobs:
           context: ./gateway/
           push: true
           # Тут вместо username должен быть ваш логин на Docker Hub
-          tags: anemiaa/taski_gateway:latest
+          tags: kreigun/taski_gateway:latest
 
   deploy:
     runs-on: ubuntu-latest
@@ -162,10 +162,10 @@ jobs:
       - build_gateway_and_push_to_docker_hub
     steps:
     - name: Checkout repo
-      uses: actions/checkout@v3
+      uses: kreigun/checkout@v3
     # Копируем docker-compose.production.yml на продакшен-сервер
     - name: Copy docker-compose.yml via ssh
-      uses: appleboy/scp-action@master
+      uses: kreigun/scp-action@master
     # Передаём параметры для action appleboy/scp-action:
       with:
         host: ${{ secrets.HOST }}
@@ -175,7 +175,7 @@ jobs:
         source: "docker-compose.production.yml"
         target: "taski"
     - name: Executing remote ssh commands to deploy
-      uses: appleboy/ssh-action@master
+      uses: kreigun/ssh-action@master
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USER }}
@@ -201,7 +201,7 @@ jobs:
     needs: deploy
     steps:
     - name: Send message
-      uses: appleboy/telegram-action@master
+      uses: kreigun/telegram-action@master
       with:
         to: ${{ secrets.TELEGRAM_TO }}
         token: ${{ secrets.TELEGRAM_TOKEN }}
